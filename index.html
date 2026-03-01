@@ -1,7 +1,636 @@
 <!DOCTYPE html>
-<html>
-<body>
-    <h1>Hello World!</h1>
-    <p>My site is live on GitHub Pages.</p>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareFlow - UX/UI Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6', // Soft Teal
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #334155; }
+        h1, h2, h3, h4 { color: #0f172a; tracking-tight; }
+        .prose-custom p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; }
+        .prose-custom li { margin-bottom: 0.75rem; line-height: 1.7; font-size: 1.125rem; }
+        
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #14b8a6;
+            z-index: 50;
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Fade-in Animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Image Placeholder Styling */
+        .img-placeholder {
+            width: 100%;
+            background-color: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            margin: 2.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .img-placeholder:hover {
+            border-color: #14b8a6;
+            background-color: #f0fdfa;
+            color: #0d9488;
+        }
+        .img-placeholder svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 antialiased relative">
+
+    <!-- Reading Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md border-b border-slate-200 z-40 top-0 transition-all duration-300">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="font-bold text-xl tracking-tighter text-slate-900">CareFlow<span class="text-brand-500">.</span></span>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-500">
+                <a href="#research" class="hover:text-brand-600 transition-colors">Research</a>
+                <a href="#personas" class="hover:text-brand-600 transition-colors">Personas</a>
+                <a href="#design" class="hover:text-brand-600 transition-colors">Design</a>
+                <a href="#testing" class="hover:text-brand-600 transition-colors">Testing</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-3xl mx-auto px-6 pt-32 pb-24 prose-custom">
+
+        <!-- Hero Section -->
+        <header class="mb-16 fade-in-section">
+            <div class="inline-block px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm font-semibold tracking-wide mb-6 border border-brand-100">
+                UX/UI Case Study
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">Designing a Health Companion Super App for Chronic Conditions</h1>
+            <p class="text-xl text-slate-500 mb-8 font-serif italic">Alleviating the cognitive load of medication and appointment management through intuitive, empathetic design.</p>
+            
+            <div class="flex items-center space-x-4 mb-12">
+                <div>
+                    <p class="text-sm font-semibold text-slate-900">SOEN 357 Mini-Project</p>
+                    <p class="text-sm text-slate-500">February 2026</p>
+                </div>
+            </div>
+
+            <!-- Final Design Hero Image -->
+            <div class="mt-8 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
+                <img src="https://raw.githubusercontent.com/CurtisMoxebo/SOEN-357-mini-project/main/images/final-mockups.jpg" alt="CareFlow Final Mockups" class="w-full h-auto object-cover">
+            </div>
+        </header>
+
+        <!-- 1. Introduction -->
+        <section id="introduction" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">1. The Challenge</h2>
+            <p>Managing chronic illness is a full-time job that involves complex medication schedules, frequent specialist consultations, and constant monitoring of health data. The CareFlow app is designed to alleviate the <strong>"cognitive load"</strong> placed on patients.</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 my-10">
+                <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                    <h3 class="text-red-800 font-bold text-lg mb-3 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        The Problem
+                    </h3>
+                    <p class="text-red-900 text-base m-0">Patients often struggle with medication adherence (forgetting doses) and fragmented communication between different doctors and specialists.</p>
+                </div>
+                <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100">
+                    <h3 class="text-brand-800 font-bold text-lg mb-3 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        The Solution
+                    </h3>
+                    <p class="text-brand-900 text-base m-0">A unified mobile platform that integrates medication reminders, vital tracking, and direct provider communication into one cohesive ecosystem.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Research Summary -->
+        <section id="research" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">2. Research Summary</h2>
+            <p>To validate our approach, we conducted a survey of 12 participants aged 35-75 who manage at least two chronic conditions. Understanding their daily struggles was vital to forming a compassionate design strategy.</p>
+            
+            <blockquote class="border-l-4 border-brand-500 pl-6 py-2 my-8 bg-slate-50 italic text-slate-600 rounded-r-lg">
+                "65% of participants admitted to missing at least one dose per week."
+            </blockquote>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">Qualitative Insights</h3>
+            <ul class="list-disc pl-6 marker:text-brand-500">
+                <li>Users feel overwhelmed by managing multiple disjointed health portals.</li>
+                <li>Anxiety surrounding missed medications is a primary emotional pain point.</li>
+                <li>Tracking vitals is seen as a chore unless there is immediate feedback.</li>
+            </ul>
+        </section>
+
+        <!-- 3. User Personas -->
+        <section id="personas" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">3. User Personas</h2>
+            <p>Based on our research, we developed two distinct personas to guide our design decisions and feature prioritization.</p>
+
+            <div class="space-y-8 mt-8">
+                <!-- Persona 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex items-center space-x-4 mb-6 border-b border-slate-100 pb-4">
+                        <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-bold text-2xl">
+                            S
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold m-0 text-slate-900">"Systematic Sarah"</h3>
+                            <p class="text-brand-600 font-medium m-0">The Organized Tracker</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600">Sarah relies heavily on her midday med checks. She needs a system that fits seamlessly into her busy workday without causing disruption. Her main goal is efficiency and maintaining her strict schedule.</p>
+                </div>
+
+                <!-- Persona 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex items-center space-x-4 mb-6 border-b border-slate-100 pb-4">
+                        <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-2xl">
+                            S
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold m-0 text-slate-900">"Senior Samuel"</h3>
+                            <p class="text-indigo-600 font-medium m-0">The Vitals Monitor</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600">Samuel needs simple, large interfaces to track his vitals. He values clear communication with his doctors and reassurance that his readings are within normal ranges.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Ideation & Flows -->
+        <section id="flows" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">4. Ideation & Architecture</h2>
+            <p>Before jumping into screens, we needed to map out how our personas would navigate the system to achieve their goals.</p>
+
+            <!-- PLACEHOLDER: Sketches -->
+            <div class="img-placeholder min-h-[300px]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+                <h3 class="font-semibold text-lg mb-1">Initial Sketches</h3>
+                <p class="text-sm">Replace with image of early paper sketches or whiteboard concepts.</p>
+            </div>
+
+            <!-- User Flowchart (CSS Diagram) -->
+            <div class="my-12">
+                <div class="border-l-4 border-slate-300 pl-4 mb-6">
+                    <h3 class="text-2xl font-bold text-slate-800 m-0">Primary App Architecture & Flow</h3>
+                    <p class="text-slate-500 m-0 text-base mt-1">Mapping the navigation paths to ensure key tasks take no more than 3 taps.</p>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-x-auto p-8 relative">
+                    <div class="min-w-[700px] flex flex-col items-center font-sans">
+                        
+                        <!-- Start -->
+                        <div class="py-2 px-6 rounded-full bg-slate-800 text-white font-semibold shadow-md text-sm z-10 hover:scale-105 transition-transform">Launch CareFlow</div>
+                        <div class="w-0.5 h-6 bg-slate-300"></div>
+
+                        <!-- Auth Check -->
+                        <div class="py-3 px-6 rounded-xl border-2 border-slate-300 bg-slate-50 text-slate-700 font-medium text-sm z-10">Login / Signup</div>
+                        <div class="w-0.5 h-6 bg-slate-300"></div>
+
+                        <!-- Dashboard -->
+                        <div class="py-4 px-8 rounded-xl bg-brand-500 text-white font-bold shadow-lg shadow-brand-200 text-lg ring-4 ring-brand-50 z-10 hover:bg-brand-600 transition-colors cursor-default">Home Dashboard</div>
+                        <div class="w-0.5 h-8 bg-slate-300"></div>
+
+                        <!-- Splitter -->
+                        <div class="w-[560px] border-t-2 border-slate-300 relative flex justify-between">
+                            <!-- Connectors -->
+                            <div class="absolute top-0 left-[10%] w-0.5 h-6 bg-slate-300"></div>
+                            <div class="absolute top-0 left-1/2 w-0.5 h-6 bg-slate-300 -translate-x-1/2"></div>
+                            <div class="absolute top-0 right-[10%] w-0.5 h-6 bg-slate-300"></div>
+
+                            <!-- Path 1: Medications -->
+                            <div class="flex flex-col items-center w-1/3 pt-6 group">
+                                <div class="py-3 px-4 rounded-xl border-2 border-brand-500 bg-brand-50 text-brand-900 font-semibold text-sm text-center w-40 shadow-sm z-10 group-hover:bg-brand-100 transition-colors">Medications</div>
+                                <div class="w-0.5 h-5 bg-slate-300"></div>
+                                <div class="py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 text-xs text-center w-36 z-10">Review Daily Schedule</div>
+                                <div class="w-0.5 h-5 bg-slate-300"></div>
+                                <div class="py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 text-xs text-center w-36 z-10">Tap "Mark Taken"</div>
+                                <div class="w-0.5 h-5 bg-slate-300"></div>
+                                <div class="py-2 px-3 rounded-lg bg-green-50 text-green-800 font-medium text-xs text-center w-36 border border-green-200 z-10 flex items-center justify-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                    Success State
+                                </div>
+                            </div>
+
+                            <!-- Path 2: Vitals -->
+                            <div class="flex flex-col items-center w-1/3 pt-6 group">
+                                <div class="py-3 px-4 rounded-xl border-2 border-indigo-500 bg-indigo-50 text-indigo-900 font-semibold text-sm text-center w-40 shadow-sm z-10 group-hover:bg-indigo-100 transition-colors">Vitals Log</div>
+                                <div class="w-0.5 h-5 bg-slate-300"></div>
+                                <div class="py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 text-xs text-center w-36 z-10">Select BP / HR</div>
+                                <div class="w-0.5 h-5 bg-slate-300"></div>
+                                <div class="py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 text-xs text-center w-36 z-10">Input Measurements</div>
+                                <div class="w-0.5 h-4 bg-slate-300"></div>
+                                
+                                <!-- Conditional Split -->
+                                <div class="w-36 border-t-2 border-slate-300 relative flex justify-between pt-4 mt-1">
+                                    <div class="absolute top-0 left-0 w-0.5 h-4 bg-slate-300"></div>
+                                    <div class="absolute top-0 right-0 w-0.5 h-4 bg-slate-300"></div>
+                                    
+                                    <div class="flex flex-col items-center -ml-6 z-10">
+                                        <div class="py-1 px-2 rounded bg-white text-slate-500 text-[10px] font-bold mb-1 border border-slate-200">Normal</div>
+                                        <div class="w-0.5 h-3 bg-slate-300"></div>
+                                        <div class="py-2 px-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs text-center w-20">Save & Exit</div>
+                                    </div>
+                                    <div class="flex flex-col items-center -mr-6 z-10">
+                                        <div class="py-1 px-2 rounded bg-white text-slate-500 text-[10px] font-bold mb-1 border border-slate-200">Abnormal</div>
+                                        <div class="w-0.5 h-3 bg-slate-300"></div>
+                                        <div class="py-2 px-2 rounded-lg bg-red-50 border border-red-200 text-red-700 font-medium text-[11px] text-center w-20">Alert Dr.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Path 3: Care Team -->
+                            <div class="flex flex-col items-center w-1/3 pt-6 group">
+                                <div class="py-3 px-4 rounded-xl border-2 border-sky-500 bg-sky-50 text-sky-900 font-semibold text-sm text-center w-40 shadow-sm z-10 group-hover:bg-sky-100 transition-colors">Care Team</div>
+                                <div class="w-0.5 h-5 bg-slate-300"></div>
+                                <div class="py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 text-xs text-center w-36 z-10">Select Provider Profile</div>
+                                <div class="w-0.5 h-4 bg-slate-300"></div>
+                                
+                                <!-- Messaging / Booking Split -->
+                                <div class="w-28 border-t-2 border-slate-300 relative flex justify-between pt-4 mt-1">
+                                    <div class="absolute top-0 left-0 w-0.5 h-4 bg-slate-300"></div>
+                                    <div class="absolute top-0 right-0 w-0.5 h-4 bg-slate-300"></div>
+                                    
+                                    <div class="flex flex-col items-center -ml-4 z-10">
+                                        <div class="py-2 px-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-[11px] text-center w-16">Message</div>
+                                    </div>
+                                    <div class="flex flex-col items-center -mr-4 z-10">
+                                        <div class="py-2 px-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-[11px] text-center w-16">Book Appt</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. User Journey Maps -->
+        <section id="journeys" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">5. User Journey Maps</h2>
+            <p>We mapped the emotional and functional journey for our primary scenarios to identify moments of friction and opportunities to delight the user.</p>
+            
+            <ul class="list-disc pl-6 mb-8 marker:text-brand-500 font-medium">
+                <li><strong>Journey 1:</strong> Sarah's Midday Med Check</li>
+                <li><strong>Journey 2:</strong> Samuel's Vitals Tracking</li>
+            </ul>
+
+            <!-- User Journey Table: Sarah -->
+            <div class="my-10">
+                <h3 class="text-xl font-bold mb-4 text-slate-800">Journey 1: Systematic Sarah's Midday Med Check</h3>
+                <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                    <table class="w-full text-sm text-left min-w-[800px]">
+                        <thead class="bg-brand-50 border-b border-brand-100 text-brand-900">
+                            <tr>
+                                <th class="p-4 font-bold border-r border-brand-100 w-1/5 bg-brand-100/50">Stages</th>
+                                <th class="p-4 font-bold text-center w-1/5">1. Notification</th>
+                                <th class="p-4 font-bold text-center w-1/5">2. App Entry</th>
+                                <th class="p-4 font-bold text-center w-1/5">3. Logging Dose</th>
+                                <th class="p-4 font-bold text-center w-1/5">4. Resolution</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <!-- Doing / Actions -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">🏃‍♀️</span> Actions
+                                </td>
+                                <td class="p-4 text-slate-600 align-top">Hears phone buzz while at work desk. Checks lock screen.</td>
+                                <td class="p-4 text-slate-600 align-top">Unlocks phone, taps notification to open CareFlow directly.</td>
+                                <td class="p-4 text-slate-600 align-top">Reviews medication listed and taps "Mark as Taken".</td>
+                                <td class="p-4 text-slate-600 align-top">Sees success checkmark, closes app, returns to work.</td>
+                            </tr>
+                            <!-- Thinking -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">💭</span> Thinking
+                                </td>
+                                <td class="p-4 text-slate-600 italic align-top">"Oh right, time for my Lisinopril. I need to take it before this meeting."</td>
+                                <td class="p-4 text-slate-600 italic align-top">"I hope this is quick, I only have two minutes."</td>
+                                <td class="p-4 text-slate-600 italic align-top">"Done. Did I take the right dosage? Yes, it says 10mg."</td>
+                                <td class="p-4 text-slate-600 italic align-top">"Great, I'm on track for today. Back to my tasks."</td>
+                            </tr>
+                            <!-- Emotional State -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">🎭</span> Emotion
+                                </td>
+                                <td class="p-4 text-center text-2xl">😮<br><span class="text-xs text-slate-500 font-medium">Interrupted</span></td>
+                                <td class="p-4 text-center text-2xl">😐<br><span class="text-xs text-slate-500 font-medium">Rushed</span></td>
+                                <td class="p-4 text-center text-2xl">🤔<br><span class="text-xs text-slate-500 font-medium">Focused</span></td>
+                                <td class="p-4 text-center text-2xl">😌<br><span class="text-xs text-brand-600 font-medium">Relieved</span></td>
+                            </tr>
+                            <!-- Pain Points -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">😠</span> Pain Points
+                                </td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Alarm might be too loud or embarrassing in a quiet office.</td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Slow loading times or confusing navigation to the log screen.</td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Fear of double-dosing if the UI isn't explicitly clear.</td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Intrusive pop-ups delaying exit from the app.</td>
+                            </tr>
+                            <!-- Opportunities -->
+                            <tr class="hover:bg-brand-50/50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-brand-700 flex items-center">
+                                    <span class="mr-2 text-lg">💡</span> Opportunities
+                                </td>
+                                <td class="p-4 text-brand-700 text-sm font-medium align-top">Allow discreet smart-watch haptics & interactive notifications.</td>
+                                <td class="p-4 text-brand-700 text-sm font-medium align-top">Deep-linking directly to the "Log Dose" modal from the alert.</td>
+                                <td class="p-4 text-brand-700 text-sm font-medium align-top">Visual pill identification (color/shape) to reassure user.</td>
+                                <td class="p-4 text-brand-700 text-sm font-medium align-top">Satisfying, quick haptic feedback and instant exit capability.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- User Journey Table: Samuel -->
+            <div class="my-10">
+                <h3 class="text-xl font-bold mb-4 text-slate-800">Journey 2: Senior Samuel's Vitals Tracking</h3>
+                <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                    <table class="w-full text-sm text-left min-w-[800px]">
+                        <thead class="bg-indigo-50 border-b border-indigo-100 text-indigo-900">
+                            <tr>
+                                <th class="p-4 font-bold border-r border-indigo-100 w-1/5 bg-indigo-100/50">Stages</th>
+                                <th class="p-4 font-bold text-center w-1/5">1. Preparation</th>
+                                <th class="p-4 font-bold text-center w-1/5">2. App Navigation</th>
+                                <th class="p-4 font-bold text-center w-1/5">3. Data Entry</th>
+                                <th class="p-4 font-bold text-center w-1/5">4. Feedback Loop</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <!-- Doing / Actions -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">🏃‍♂️</span> Actions
+                                </td>
+                                <td class="p-4 text-slate-600 align-top">Sits at the kitchen table, puts on BP cuff, and takes morning reading.</td>
+                                <td class="p-4 text-slate-600 align-top">Puts on reading glasses, opens CareFlow, finds "Log Vitals" tab.</td>
+                                <td class="p-4 text-slate-600 align-top">Types "125" and "82" into the respective large input fields.</td>
+                                <td class="p-4 text-slate-600 align-top">Reviews the "Normal Range" message. Closes app to eat breakfast.</td>
+                            </tr>
+                            <!-- Thinking -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">💭</span> Thinking
+                                </td>
+                                <td class="p-4 text-slate-600 italic align-top">"Let's see how my blood pressure is doing today. I hope it's not high."</td>
+                                <td class="p-4 text-slate-600 italic align-top">"Where is the button to add my numbers? Ah, the big blue one."</td>
+                                <td class="p-4 text-slate-600 italic align-top">"Did I type that right? Let me double-check the numbers on the machine."</td>
+                                <td class="p-4 text-slate-600 italic align-top">"Thank goodness, it's green. I don't need to message Dr. Chen."</td>
+                            </tr>
+                            <!-- Emotional State -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">🎭</span> Emotion
+                                </td>
+                                <td class="p-4 text-center text-2xl">😟<br><span class="text-xs text-slate-500 font-medium">Anxious</span></td>
+                                <td class="p-4 text-center text-2xl">🤨<br><span class="text-xs text-slate-500 font-medium">Concentrating</span></td>
+                                <td class="p-4 text-center text-2xl">🧐<br><span class="text-xs text-slate-500 font-medium">Careful</span></td>
+                                <td class="p-4 text-center text-2xl">😊<br><span class="text-xs text-indigo-600 font-medium">Relieved</span></td>
+                            </tr>
+                            <!-- Pain Points -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-slate-700 flex items-center">
+                                    <span class="mr-2 text-lg">😠</span> Pain Points
+                                </td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Manual blood pressure monitors can be frustrating to put on alone.</td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Small text or hidden hamburger menus make finding the log screen hard.</td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Tiny standard mobile keyboards lead to typos (e.g., typing 1255).</td>
+                                <td class="p-4 text-red-600/80 text-sm align-top">Complex medical charts or jargon can cause unnecessary confusion.</td>
+                            </tr>
+                            <!-- Opportunities -->
+                            <tr class="hover:bg-indigo-50/50 transition-colors">
+                                <td class="p-4 font-semibold bg-slate-50/80 border-r border-slate-100 text-indigo-700 flex items-center">
+                                    <span class="mr-2 text-lg">💡</span> Opportunities
+                                </td>
+                                <td class="p-4 text-indigo-700 text-sm font-medium align-top">Offer Bluetooth integration to pull readings automatically from the BP monitor.</td>
+                                <td class="p-4 text-indigo-700 text-sm font-medium align-top">Provide high-contrast, oversized action buttons for primary daily tasks on Home.</td>
+                                <td class="p-4 text-indigo-700 text-sm font-medium align-top">Implement a custom oversized numpad specifically for vitals entry.</td>
+                                <td class="p-4 text-indigo-700 text-sm font-medium align-top">Use plain-language feedback with clear color-coding (Green/Yellow/Red).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Storyboards -->
+        <section id="storyboards" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">6. Storyboards</h2>
+            <p>To better understand the physical and social context of our users, we created storyboards illustrating the environmental factors and triggers that lead to app usage in their daily lives.</p>
+            
+            <!-- PLACEHOLDER: Storyboard -->
+            <div class="img-placeholder min-h-[400px] my-8">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <h3 class="font-semibold text-lg mb-1">Storyboard Scenarios</h3>
+                <p class="text-sm">Replace this block with your storyboard image using an &lt;img&gt; tag.</p>
+            </div>
+        </section>
+
+        <!-- 7. Color Palette -->
+        <section id="colors" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">7. Color Palette</h2>
+            <p>Our color palette was chosen to balance a trustworthy medical feel with a fresh, modern aesthetic. The soft teal anchors the brand, while vibrant green highlights success states, and neutral grays create a clean content hierarchy.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 my-10">
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full shadow-md mb-3 bg-[#0D9488]"></div>
+                    <p class="font-bold text-slate-800 m-0 text-sm">Primary</p>
+                    <p class="text-xs text-slate-500 font-mono mt-1">#0D9488</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full shadow-md mb-3 bg-[#00FF09]"></div>
+                    <p class="font-bold text-slate-800 m-0 text-sm">Success</p>
+                    <p class="text-xs text-slate-500 font-mono mt-1">#00FF09</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full shadow-md mb-3 bg-[#C4C4C4]"></div>
+                    <p class="font-bold text-slate-800 m-0 text-sm">Neutral</p>
+                    <p class="text-xs text-slate-500 font-mono mt-1">#C4C4C4</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full shadow-sm border border-slate-200 mb-3 bg-[#F6F6F6]"></div>
+                    <p class="font-bold text-slate-800 m-0 text-sm">Off-White</p>
+                    <p class="text-xs text-slate-500 font-mono mt-1">#F6F6F6</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full shadow-sm border border-slate-200 mb-3 bg-[#FFFFFF]"></div>
+                    <p class="font-bold text-slate-800 m-0 text-sm">Pure White</p>
+                    <p class="text-xs text-slate-500 font-mono mt-1">#FFFFFF</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full shadow-md mb-3 bg-[#000000]"></div>
+                    <p class="font-bold text-slate-800 m-0 text-sm">Black</p>
+                    <p class="text-xs text-slate-500 font-mono mt-1">#000000</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Design Execution -->
+        <section id="design" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">8. Design Execution</h2>
+            <p>Translating research into tangible interfaces. We started low-fidelity to nail the structure before applying our soft, calming UI palette.</p>
+
+            <!-- Low-Fidelity Wireframes -->
+            <div class="my-12">
+                <div class="border-l-4 border-slate-300 pl-4 mb-6">
+                    <h3 class="text-2xl font-bold text-slate-800 m-0">Low-Fidelity Wireframes</h3>
+                    <p class="text-slate-500 m-0 text-base mt-1">Establishing the core layout, navigation, and functional elements.</p>
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
+                    <img src="https://raw.githubusercontent.com/CurtisMoxebo/SOEN-357-mini-project/main/images/wireframes.png" alt="CareFlow Low-Fidelity Wireframes" class="w-full h-auto object-cover">
+                </div>
+            </div>
+
+            <!-- Final Design Screens -->
+            <div class="my-12">
+                <div class="border-l-4 border-brand-500 pl-4 mb-6">
+                    <h3 class="text-2xl font-bold text-slate-800 m-0">High-Fidelity Final Design</h3>
+                    <p class="text-slate-500 m-0 text-base mt-1">The polished UI featuring our soft teal palette to reduce cognitive load.</p>
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white">
+                    <img src="https://raw.githubusercontent.com/CurtisMoxebo/SOEN-357-mini-project/main/images/final-mockups.jpg" alt="CareFlow High-Fidelity Design Screens" class="w-full h-auto object-cover transition-transform duration-700 hover:scale-[1.02]">
+                </div>
+            </div>
+            
+            <p class="text-sm text-slate-500 italic mt-8 text-center">Note: The core of CareFlow isn't just data storage; it's the interruption-to-resolution loop. By minimizing the friction of logging, we ensure the user can return to their primary life activities without health anxiety lingering.</p>
+        </section>
+
+        <!-- 9. Usability Testing Plan -->
+        <section id="testing" class="mt-16 fade-in-section bg-slate-100 p-8 rounded-2xl">
+            <h2 class="text-3xl font-bold mb-6 border-b border-slate-300 pb-2">9. Usability Testing Plan</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Goals</h3>
+                <ul class="list-disc pl-6 marker:text-brand-500">
+                    <li>Measure the time taken to mark a medication as "Taken."</li>
+                    <li>Evaluate the discoverability of the Lab Results section.</li>
+                    <li>Assess the user's emotional reaction to the "Normal Range" feedback loops.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Task List for Participants</h3>
+                <ol class="list-decimal pl-6 font-medium text-slate-800 space-y-2">
+                    <li class="pl-2">Sign in and identify when your next dose of Lisinopril is due.</li>
+                    <li class="pl-2">Log a heart rate of 75 bpm.</li>
+                    <li class="pl-2">Send a message to Dr. Chen asking about your lab results.</li>
+                </ol>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-2">Feedback Analysis</h3>
+                <p class="m-0">We utilize SUS (System Usability Scale) scoring. Feedback is categorized into <strong>"Critical Blockers,"</strong> <strong>"Experience Friction,"</strong> and <strong>"Delighters."</strong> We iterate by simplifying the vitals entry form if users take longer than 15 seconds to log a value.</p>
+            </div>
+        </section>
+
+        <!-- 10. Reflections -->
+        <section id="reflections" class="mt-16 fade-in-section">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2">10. Reflections</h2>
+            <p>The UX design process revealed that feedback is just as important as tracking. Initially, we simply stored data. Through interviews, we realized that seeing "Normal" or "Goal Met" provided the emotional incentive needed for chronic patients to keep using the app.</p>
+            
+            <div class="bg-brand-50 border-l-4 border-brand-500 p-6 mt-8 rounded-r-xl">
+                <h4 class="font-bold text-brand-900 mb-2">Overcoming Challenges</h4>
+                <p class="m-0 text-brand-800 text-sm md:text-base">Balancing a "medical" feel (trustworthy) with a "lifestyle" feel (not depressing) was tough. We overcame this by using a soft teal and white palette rather than sterile hospital blues and greys.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-24 border-t border-slate-200 pt-8 text-center text-slate-500 text-sm pb-12 fade-in-section">
+            <p>Designed for SOEN 357 Mini-Project • Winter 2026</p>
+        </footer>
+
+    </main>
+
+    <!-- Interactions Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Reading Progress Bar
+            const progressBar = document.getElementById('progress-bar');
+            
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            });
+
+            // Fade in animation on scroll using Intersection Observer
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            
+            const appearOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            fadeElements.forEach(element => {
+                appearOnScroll.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>
